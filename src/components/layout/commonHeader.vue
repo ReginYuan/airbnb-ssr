@@ -1,0 +1,89 @@
+<script setup lang="ts">
+import { ref, defineEmits, getCurrentInstance } from "vue";
+import zhCn from "element-plus/lib/locale/lang/zh-cn";
+import en from "element-plus/lib/locale/lang/en";
+import { useI18n } from "vue-i18n";
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+const { t } = useI18n();
+const router = useRouter();
+const activeIndex = ref("orders");
+// $emit子组件向父组件传参
+const emit = defineEmits<{ (e: "changLang", language: any): void }>();
+
+// 切换语言
+const handleSelect = (e: any) => {
+  if (e === "zh") {
+    emit("changLang", zhCn);
+    saveLanguageHandler("zhCn");
+  } else if (e === "en") {
+    emit("changLang", en);
+    saveLanguageHandler("en");
+  } else if (e === "login") {
+    router.push({ name: "login" });
+  }
+  console.log(e);
+};
+// 保存当前语言包
+const saveLanguageHandler = (language) => {
+  store.commit("saveLanguage", { name: language });
+};
+
+const store = useStore();
+// 获取当前语言包
+const getLanguage = () => {
+  let language = store.state.language;
+  if (language) {
+    debugger
+    if (language.name === "zh") {
+      emit("changLang", zhCn);
+    } else if (language.name === "en") {
+      emit("changLang", en);
+    }
+  } else {
+    store.commit("saveLanguage", { name: zhCn });
+  }
+  console.log("获取当前语言包成功");
+};
+getLanguage();
+</script>
+
+<template>
+  <div class="content">
+    <img
+      class="content-logo"
+      src="~@/assets/images/layout/logo.png"
+      alt="爱此迎"
+    />
+    <el-menu
+      :default-active="activeIndex"
+      class="content-menu"
+      mode="horizontal"
+      @select="handleSelect"
+    >
+      <el-menu-item index="orders">{{ t("header.orders") }}</el-menu-item>
+      <el-menu-item index="records">{{ t("header.records") }}</el-menu-item>
+      <el-sub-menu class="content-menu-sub" index="language">
+        <template #title>{{ t("header.language") }}</template>
+        <el-menu-item class="content-menu-su-zh" index="zh">中文</el-menu-item>
+        <el-menu-item class="content-menu-su-zh" index="en"
+          >English</el-menu-item
+        >
+      </el-sub-menu>
+      <!-- <el-menu-item class="content-menu-personal" index="avatar">
+        <img
+          class="content-menu-personal-img"
+          src="~@/assets/images/layout/avatar.png"
+          alt="个人中心"
+        />
+      </el-menu-item> -->
+      <el-menu-item class="content-menu-personal" index="login">
+        {{ t("login.loginTab") }} / {{ t("login.signTab") }}
+      </el-menu-item>
+    </el-menu>
+  </div>
+</template>
+
+<style lang="scss" scoped>
+@import "@/assets/scss/layout/commonHeader.scss";
+</style>
