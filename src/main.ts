@@ -12,6 +12,7 @@ import api from "@/api/index";
 // 创建app实例
 const app = createApp(App)
 
+//语言国家化
 app.use(ElementPlus, {
   locale: zhCn,
 })
