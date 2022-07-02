@@ -6,6 +6,7 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { ElMessage } from 'element-plus';
 import router from './../router/index'
 import config from './../config/index'
+import storage from "./storage";
 
 //设置自定义报错
 const TOKEN_INVALID = 'Token认证失败,请重新登陆'
@@ -22,7 +23,9 @@ const service = axios.create({
 service.interceptors.request.use((req: AxiosRequestConfig) => {
   //TO-DO
   const headers: any = req.headers;
-  if (!headers.Authorization) headers.Authorization = "ReginYuan"
+  const { token = "" } = storage.getItem('userInfo') || {}
+  //从locastorage 的userInfo中获取token
+  if (!headers.Authorization) headers.Authorization = "ReginYuan " + token
   return req;
 })
 
@@ -32,7 +35,7 @@ service.interceptors.response.use((res: AxiosResponse) => {
   const { code, data, msg } = res.data;
   if (code === 200) {
     return data;
-  } else if (code === 40001) {
+  } else if (code === 50001) {
     // 提示异常
     ElMessage.error(TOKEN_INVALID)
     // 跳转到登录页面
@@ -69,7 +72,7 @@ function request(options: any) {
   } else {
     // 如果开启mock 就启用 config.mockApi 如果没开启mock就启用config.baseApi
     // service.defaults.baseURL = config.mock ? config.mockApi : config.baseApi
-        service.defaults.baseURL = config.mock ? 'https://www.fastmock.site/mock/d219c21f5eb0aed28d349a9424f6ab96/api' : '/'
+    service.defaults.baseURL = config.mock ? 'https://www.fastmock.site/mock/d219c21f5eb0aed28d349a9424f6ab96/api' : '/api'
   }
   return service(options)
 }

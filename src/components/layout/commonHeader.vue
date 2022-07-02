@@ -22,7 +22,6 @@ const handleSelect = (e: any) => {
   } else if (e === "login") {
     router.push({ name: "login" });
   }
-  console.log(e);
 };
 // 保存当前语言包
 const saveLanguageHandler = (language) => {
@@ -34,7 +33,6 @@ const store = useStore();
 const getLanguage = () => {
   let language = store.state.language;
   if (language) {
-    debugger
     if (language.name === "zh") {
       emit("changLang", zhCn);
     } else if (language.name === "en") {

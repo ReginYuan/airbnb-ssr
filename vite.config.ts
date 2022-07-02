@@ -8,7 +8,12 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 export default defineConfig({
   server: {
     host: 'localhost',//配置主机名
-    port: 8080//配置端口号
+    port: 8080,//配置端口号
+    proxy: {
+      "/api": {
+        target: "http://localhost:3000"
+      }
+    }
   },
   plugins: [
     vue(),

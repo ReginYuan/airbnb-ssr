@@ -50,23 +50,14 @@ const handleText = (e: any) => {
 };
 
 // 注册接口
-const userSign = (params: IRuleForm) => {
-  proxy.$api.sgin(params).then((res: IResultOr) => {
-    // const { success, msg } = res;
-    // if (success) {
-    //   ElMessage.success(msg);
-    // } else {
-    //   ElMessage.error(msg);
-    // }
-  });
+const userSign = async (params: IRuleForm) => {
+  const res = await proxy.$api.sign(params);
 };
 // 登录接口
 const userLogin = async (params: IRuleForm) => {
   const res = await proxy.$api.login(params);
-  console.log(res);
   proxy.$store.commit("saveUserInfo", res);
   router.push({ name: "welcome" });
-  console.log(res);
 };
 
 const onSubmit = () => {

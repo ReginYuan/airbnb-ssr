@@ -14,7 +14,16 @@ export default {
       url: '/users/login',
       method: 'post',
       data: params,
-      mock: true
+      mock: false
+    })
+  },
+  sign(params: any) {
+    debugger
+    return request({
+      url: '/users/sign',
+      method: 'post',
+      data: params,
+      mock: false
     })
   },
 }
