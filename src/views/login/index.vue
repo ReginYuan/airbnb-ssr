@@ -52,10 +52,20 @@ const handleText = (e: any) => {
 // 注册接口
 const userSign = async (params: IRuleForm) => {
   const res = await proxy.$api.sign(params);
+  if (res.code == 200) {
+    ElMessage.success(res.msg);
+  } else {
+    ElMessage.error(res.msg);
+  }
 };
 // 登录接口
 const userLogin = async (params: IRuleForm) => {
   const res = await proxy.$api.login(params);
+  if (res.code == 200) {
+    ElMessage.success(res.msg);
+  } else {
+    ElMessage.error(res.msg);
+  }
   proxy.$store.commit("saveUserInfo", res);
   router.push({ name: "welcome" });
 };

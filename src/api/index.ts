@@ -18,9 +18,16 @@ export default {
     })
   },
   sign(params: any) {
-    debugger
     return request({
       url: '/users/sign',
+      method: 'post',
+      data: params,
+      mock: false
+    })
+  },
+  logout(params: any) {
+    return request({
+      url: '/users/logout',
       method: 'post',
       data: params,
       mock: false

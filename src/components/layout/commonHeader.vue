@@ -5,9 +5,22 @@ import en from "element-plus/lib/locale/lang/en";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
+
+//获取useI18n国际化对象
 const { t } = useI18n();
+
+// 获取路由对象
 const router = useRouter();
+
+//获取vuex对象
+const store = useStore();
+
+// 初始化导航选择对象
 const activeIndex = ref("orders");
+
+// 全局对象
+const { proxy }: any = getCurrentInstance();
+
 // $emit子组件向父组件传参
 const emit = defineEmits<{ (e: "changLang", language: any): void }>();
 
@@ -21,14 +34,16 @@ const handleSelect = (e: any) => {
     saveLanguageHandler("en");
   } else if (e === "login") {
     router.push({ name: "login" });
+  } else if (e === "logout") {
+    userLogout();
   }
 };
+
 // 保存当前语言包
 const saveLanguageHandler = (language) => {
   store.commit("saveLanguage", { name: language });
 };
 
-const store = useStore();
 // 获取当前语言包
 const getLanguage = () => {
   let language = store.state.language;
@@ -44,6 +59,18 @@ const getLanguage = () => {
   console.log("获取当前语言包成功");
 };
 getLanguage();
+
+// 获取登陆状态
+let status = (store.state.userInfo && store.state.userInfo.status) || "0";
+
+// 登出方法
+const userLogout = async () => {
+  let { mobile, password } = store.state.userInfo;
+  let params = { mobile, password };
+  const res = await proxy.$api.logout(params);
+  proxy.$store.commit("saveUserInfo", res);
+  router.push({ name: "login" });
+};
 </script>
 
 <template>
@@ -68,14 +95,22 @@ getLanguage();
           >English</el-menu-item
         >
       </el-sub-menu>
-      <!-- <el-menu-item class="content-menu-personal" index="avatar">
-        <img
-          class="content-menu-personal-img"
-          src="~@/assets/images/layout/avatar.png"
-          alt="个人中心"
-        />
-      </el-menu-item> -->
-      <el-menu-item class="content-menu-personal" index="login">
+      <el-sub-menu
+        class="content-menu-personal"
+        v-if="status === '1'"
+        index="avatar"
+      >
+        <template #title>
+          <img
+            class="content-menu-personal-img"
+            src="~@/assets/images/layout/avatar.png"
+            alt="个人中心"
+        /></template>
+        <el-menu-item class="content-menu-personal-logout" index="logout"
+          >退出</el-menu-item
+        >
+      </el-sub-menu>
+      <el-menu-item class="content-menu-personal" v-else index="login">
         {{ t("login.loginTab") }} / {{ t("login.signTab") }}
       </el-menu-item>
     </el-menu>

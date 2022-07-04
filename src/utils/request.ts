@@ -34,7 +34,8 @@ service.interceptors.request.use((req: AxiosRequestConfig) => {
 service.interceptors.response.use((res: AxiosResponse) => {
   const { code, data, msg } = res.data;
   if (code === 200) {
-    return data;
+    let result = { code, data, msg }
+    return result;
   } else if (code === 50001) {
     // 提示异常
     ElMessage.error(TOKEN_INVALID)
