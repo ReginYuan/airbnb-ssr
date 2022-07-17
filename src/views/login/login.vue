@@ -1,80 +1,24 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import { ref, reactive, getCurrentInstance } from "vue";
 import { useRouter } from "vue-router";
+import useFormProperties from "@/hooks/useFormProperties";
+import userFormOperates from "@/hooks/userFormOperates";
 const { t } = useI18n();
-import { userSignApi, userLoginApi } from "@/api/login/index";
-import { IResultOr } from "@/api/interface";
-import { ElMessage } from "element-plus";
-interface IRuleForm {
-  mobile: string;
-  password: string;
-}
 const router = useRouter();
-const { proxy }: any = getCurrentInstance();
-const activeName = ref("login");
-const ruleFormRef = ref();
-const loginText = ref(t("login.loginBtn"));
-const form: IRuleForm = reactive({
-  mobile: "",
-  password: "",
-});
+const { activeName, ruleFormRef, loginText, form, rules } =
+  useFormProperties(t);
+const { userSign, userLogin } = userFormOperates(router, form);
 
-// 表单校验
-const rules = reactive({
-  mobile: [
-    {
-      required: true,
-      min: 11,
-      max: 11,
-      message: t("login.placeMobile"),
-      trigger: "blur",
-    },
-  ],
-  password: [
-    {
-      required: true,
-      message: t("login.placePass"),
-      trigger: "blur",
-    },
-  ],
-});
-
+// 登录注册切换
 const handleText = (e: any) => {
-  const { name, label } = e.props;
-  if (name === "login") {
-    loginText.value = t("login.loginBtn");
-  } else if (name === "sign") {
-    loginText.value = t("login.signTab");
-  }
+  const { name } = e.props;
+  loginText.value = t(`login['${name}'Btn`);
 };
 
-// 注册接口
-const userSign = async (params: IRuleForm) => {
-  const res = await proxy.$api.sign(params);
-  if (res.code == 200) {
-    ElMessage.success(res.msg);
-  } else {
-    ElMessage.error(res.msg);
-  }
-};
-// 登录接口
-const userLogin = async (params: IRuleForm) => {
-  const res = await proxy.$api.login(params);
-  if (res.code == 200) {
-    ElMessage.success(res.msg);
-  } else {
-    ElMessage.error(res.msg);
-  }
-  proxy.$store.commit("saveUserInfo", res);
-  router.push({ name: "welcome" });
-};
-
+// 提交数据
 const onSubmit = () => {
   ruleFormRef.value.validate((valid: any) => {
     if (valid) {
-      console.log(activeName);
-      console.log(activeName.value === "sign");
       if (activeName.value === "sign") {
         userSign(form);
       } else if (activeName.value === "login") {

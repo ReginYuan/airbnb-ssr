@@ -4,9 +4,12 @@
 
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { ElMessage } from 'element-plus';
-import router from './../router/index'
+import { useRouter } from "vue-router";
 import config from './../config/index'
 import storage from "./storage";
+
+// 获取路由实例
+const router = useRouter()
 
 //设置自定义报错
 const TOKEN_INVALID = 'Token认证失败,请重新登陆'
@@ -41,7 +44,7 @@ service.interceptors.response.use((res: AxiosResponse) => {
     ElMessage.error(TOKEN_INVALID)
     // 跳转到登录页面
     setTimeout(() => {
-      router.push('/login')
+      router.push({name:'login'})
     }, 15000)
     // 向控制台抛出异常
     return Promise.reject(TOKEN_INVALID)

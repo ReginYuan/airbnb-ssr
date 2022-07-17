@@ -1,8 +1,56 @@
-.button {
-  color: $red;
-}
-
-.text {
-  @include line-text-overflow;
-  width: 200px;
+.home {
+  &-banner {
+    height: 530px;
+    width: 100%;
+    background: url("../../images/welcome/banner.jpg") no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+  .main-wapper {
+    @include main-wapper();
+  }
+  &-content {
+    @include flex-layout(column, center, center);
+    &-all {
+      @include flex-layout(column, center, flex-start);
+      width: 100%;
+      margin: 20px;
+      padding-left: 45px;
+      &-title {
+        font-size: 22px;
+      }
+      &-subtitle {
+        font-size: 16px;
+        margin: 5px 0 25px 0;
+      }
+    }
+    &-list {
+      @include flex-layout(row, center, center);
+      flex-wrap: wrap;
+      &-item {
+        width: 333px;
+        overflow: hidden;
+        display: inline-block;
+        margin: 0px 8px 25px 8px;
+        &-img {
+          width: 333px;
+          height: 258px;
+          object-fit: cover;
+          border-radius: 4px;
+        }
+        &-title {
+          width: 333px;
+          font-size: 18px;
+          margin: 15px 0px;
+          font-weight: bold;
+          text-align: left;
+          @include text-overflow(1)
+        }
+        &-price {
+          font-size: 16px;
+          text-align: left;
+        }
+      }
+    }
+  }
 }

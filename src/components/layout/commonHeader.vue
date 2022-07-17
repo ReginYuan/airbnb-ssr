@@ -2,10 +2,10 @@
 import { ref, defineEmits, getCurrentInstance } from "vue";
 import zhCn from "element-plus/lib/locale/lang/zh-cn";
 import en from "element-plus/lib/locale/lang/en";
+import userFormOperates from "@/hooks/userFormOperates";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
-import { useStore } from "vuex";
-
+import { useStore } from "@/store/index";
 //获取useI18n国际化对象
 const { t } = useI18n();
 
@@ -18,8 +18,10 @@ const store = useStore();
 // 初始化导航选择对象
 const activeIndex = ref("orders");
 
-// 全局对象
-const { proxy }: any = getCurrentInstance();
+// 获取登陆状态
+let status = store.state.userInfo && store.state.userInfo.status;
+// 初始化 封装方法对象 结构退出登陆方法
+const { userLogout } = userFormOperates(router);
 
 // $emit子组件向父组件传参
 const emit = defineEmits<{ (e: "changLang", language: any): void }>();
@@ -59,18 +61,6 @@ const getLanguage = () => {
   console.log("获取当前语言包成功");
 };
 getLanguage();
-
-// 获取登陆状态
-let status = (store.state.userInfo && store.state.userInfo.status) || "0";
-
-// 登出方法
-const userLogout = async () => {
-  let { mobile, password } = store.state.userInfo;
-  let params = { mobile, password };
-  const res = await proxy.$api.logout(params);
-  proxy.$store.commit("saveUserInfo", res);
-  router.push({ name: "login" });
-};
 </script>
 
 <template>

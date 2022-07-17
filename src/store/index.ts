@@ -1,17 +1,45 @@
 /**
  * Vuex 状态管理
  */
-import { createStore } from 'vuex'
+import { createStore, Store, useStore as baseUseStore } from 'vuex'
 import mutations from '@/store/mutations'
 import storage from '@/utils/storage'
-
-const state = {
-  userInfo: storage.getItem("userInfo") || {},// 获取用户信息
-  language: storage.getItem('language') || {},
-  menuList: storage.getItem("menuList") || [],// 获取菜单列表信息
-  actionList: storage.getItem("actionList") || [],//获取按钮列表信息
+import { InjectionKey } from 'vue'
+import createPersistedState from "vuex-persistedstate";
+import actions from "@/store/actions";
+//为store state 声明类型
+export interface AllStateTypes {
+  userInfo: object,
+  language: object,
+  roomList: Array<any>,
+  pageNum: Number,
+  pageSize: Number,
+  total: Number
 }
-export default createStore({
-  state,
-  mutations
-})
+
+// 定义 InjectionKey  key
+export const key: InjectionKey<Store<AllStateTypes>> = Symbol('storekey')
+
+
+// 封装useStore传递key
+export function useStore() {
+  return baseUseStore(key)
+}
+
+// 实力一个createStore
+export function createSSRStore() {
+  return createStore<AllStateTypes>({
+    state: {
+      userInfo: storage.getItem("userInfo") || {},// 存储用户信息
+      language: storage.getItem('language') || {}, //存储国际化语言
+      roomList: storage.getItem('roomList') || [],//存储房间信息
+      pageNum: 0, //页数
+      pageSize: 10, //每页条数
+      total: 0 //总条数
+    },
+    actions,
+    mutations,
+    //默认存储到cookies
+    plugins: [createPersistedState({ storage: storage })],
+  })
+}
