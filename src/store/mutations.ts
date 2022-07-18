@@ -16,10 +16,16 @@ export default {
     storage.setItem('language', language)
   },
   // 保存民宿的数据信息
-  saveHouseList(state: any, roomList: any) {
-    roomList.forEach((item: any) => {
+  saveHouseList(state: any, data: any) {
+    state.roomList = []
+    const { pageNum, cityCode } = data.payload
+    console.log('data.payload', data.payload)
+    data.list.forEach((item: any) => {
       state.roomList.push(item);
     });
-    storage.setItem('roomList', roomList)
+    state.total = data.page.total
+    state.pageNum = pageNum
+    state.cityCode = cityCode
+    storage.setItem('roomList', data)
   }
 }

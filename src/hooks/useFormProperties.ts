@@ -1,15 +1,10 @@
 import { ref, reactive } from "vue";
-
+import { IRuleForm } from "@/interface/index";
 export default function userFormOperates(t: any) {
 
   const activeName = ref("login");
   const ruleFormRef = ref();
   const loginText = ref(t("login.loginBtn"));
-
-  interface IRuleForm {
-    mobile: string;
-    password: string;
-  }
 
   const form: IRuleForm = reactive({
     mobile: "",

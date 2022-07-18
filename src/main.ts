@@ -58,3 +58,16 @@ export function createApp() {
 
   return { app, router, store }
 }
+
+export function asyncDataFilters(components: any, store: any, route: any) {
+  return Promise.all(
+    components.map((Component: any) => {
+      if (Component.asyncData) {
+        return Component.asyncData({
+          store,
+          route,
+        });
+      }
+    }),
+  )
+}

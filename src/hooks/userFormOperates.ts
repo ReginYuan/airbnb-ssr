@@ -1,15 +1,13 @@
 import { getCurrentInstance } from "vue";
 import { ElMessage } from "element-plus";
 import { useStore } from '@/store/index'
+import { IRuleForm } from "@/interface/index";
 export default function userFormOperates(router: any, params: any) {
   //获取store对象
   const store = useStore()
   // 获取全局对象
   const { proxy }: any = getCurrentInstance();
-  interface IRuleForm {
-    mobile: string;
-    password: string;
-  }
+ 
 
   // 注册接口方法
   const userSign = async (params: IRuleForm) => {

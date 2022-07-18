@@ -7,15 +7,8 @@ import storage from '@/utils/storage'
 import { InjectionKey } from 'vue'
 import createPersistedState from "vuex-persistedstate";
 import actions from "@/store/actions";
-//为store state 声明类型
-export interface AllStateTypes {
-  userInfo: object,
-  language: object,
-  roomList: Array<any>,
-  pageNum: Number,
-  pageSize: Number,
-  total: Number
-}
+import { AllStateTypes } from "@/interface/index";
+
 
 // 定义 InjectionKey  key
 export const key: InjectionKey<Store<AllStateTypes>> = Symbol('storekey')
@@ -33,9 +26,10 @@ export function createSSRStore() {
       userInfo: storage.getItem("userInfo") || {},// 存储用户信息
       language: storage.getItem('language') || {}, //存储国际化语言
       roomList: storage.getItem('roomList') || [],//存储房间信息
-      pageNum: 0, //页数
+      pageNum: 1, //页数
       pageSize: 10, //每页条数
-      total: 0 //总条数
+      total: 0, //总条数
+      cityCode: 'hz' //城市id
     },
     actions,
     mutations,

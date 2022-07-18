@@ -25,7 +25,7 @@
       }
     }
     &-list {
-      @include flex-layout(row, center, center);
+      @include flex-layout(row, flex-start, center);
       flex-wrap: wrap;
       &-item {
         width: 333px;
@@ -44,7 +44,7 @@
           margin: 15px 0px;
           font-weight: bold;
           text-align: left;
-          @include text-overflow(1)
+          @include text-overflow(1);
         }
         &-price {
           font-size: 16px;

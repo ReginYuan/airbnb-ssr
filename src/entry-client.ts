@@ -1,8 +1,8 @@
-import { createApp } from "./main";
+import { createApp, asyncDataFilters } from "./main";
 
 const { app, router, store } = createApp();
-if (window.__INITIAL_STATE__) {
-  store.replaceState(window.__INITIAL_STATE__)
+if ((window as any).__INITIAL_STATE__) {
+  store.replaceState((window as any).__INITIAL_STATE__)
 }
 //路由加载完之后,挂载app
 router.isReady().then(async () => {
@@ -20,14 +20,7 @@ router.isReady().then(async () => {
     if (!actived.length) {
       return next()
     }
-    Promise.all(actived.map((Component: any) => {
-      if (Component.asyncData) {
-        return Component.asyncData({
-          store,
-          route: router.currentRoute,
-        });
-      }
-    })).then(() => {
+    asyncDataFilters(actived, store, router.currentRoute).then(() => {
       next()
     })
   })

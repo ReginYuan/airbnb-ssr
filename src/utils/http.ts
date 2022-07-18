@@ -38,7 +38,7 @@ class Http {
    * 封装请求
    */
   public httpRequestGet<T>(url: string, params: AxiosRequestConfig): Promise<T> {
-    return Http.axiosInstance.get(url, params).then(res => res.data).catch()
+    return Http.axiosInstance.get(url, {params}).then(res => res.data).catch()
   }
 
   /**
