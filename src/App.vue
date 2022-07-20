@@ -27,7 +27,7 @@ const route = useRoute();
       @changLang="changLang"
     />
     <!-- 主体 -->
-    <div class="containera">
+    <div class="container">
       <router-view />
     </div>
     <!-- 底部 -->

@@ -26,11 +26,15 @@
 <script setup lang="ts">
 import { useStore } from "@/store/index";
 import Pagination from "@/components/common/pagination.vue";
-import HomeTabs from "@/views/home/commponents/homeTabs.vue";
+import HomeTabs from "@/views/home/components/homeTabs.vue";
 import { IRoomListParams } from "@/interface/index";
+import { useRouter } from "vue-router";
 const store = useStore();
+const router = useRouter();
 const cliclItem = (item) => {
-  console.log("item", item);
+  const { id } = item;
+  store.commit("saveRoomId", { id } as IRoomDetailParams);
+  router.push({ path: `/detail/${id}` });
 };
 const changePage = (params: IRoomListParams) => {
   console.log("父组件", params);

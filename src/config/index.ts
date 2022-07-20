@@ -1,19 +1,19 @@
 /**
  * 环境配置封装
  */
-const env: any = import.meta.env.MODE || 'prod';
+const env: any = import.meta.env.PROD || 'dev';
 const EnvConfig = {
   dev: { //开发环境
-    baseApi: '/api',
-    mockApi: 'https://www.fastmock.site/mock/d219c21f5eb0aed28d349a9424f6ab96/api'
+    baseApi: 'http://localhost:8080',
+    mockApi: 'http://localhost:8080'
   },
   test: { //测试环境
     baseApi: '//tets.futurefe.com/api',
     mockApi: 'https://www.fastmock.site/mock/d219c21f5eb0aed28d349a9424f6ab96/api'
   },
   prod: { //生产环境
-    baseApi: '//futurefe.com/api',
-    mockApi: 'https://www.fastmock.site/mock/d219c21f5eb0aed28d349a9424f6ab96/api'
+    baseApi: 'http://localhost:8080',
+    mockApi: 'http://localhost:8080'
   }
 }
 export default {

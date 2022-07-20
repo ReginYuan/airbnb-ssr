@@ -3,10 +3,10 @@
  * 单独请求数据方法封装
  */
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-
+import config from './../config/index'
 const defaultConfig = {
   timeout: 5000,
-  baseUrl: ''
+  baseURL: config.baseApi,
 }
 
 

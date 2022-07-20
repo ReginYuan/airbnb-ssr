@@ -29,7 +29,9 @@ export function createSSRStore() {
       pageNum: 1, //页数
       pageSize: 10, //每页条数
       total: 0, //总条数
-      cityCode: 'hz' //城市id
+      cityCode: 'hz', //城市id
+      roomDetail: storage.getItem('roomDetail') || {},
+      roomId: null
     },
     actions,
     mutations,

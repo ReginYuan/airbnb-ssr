@@ -9,7 +9,7 @@ export default defineConfig({
   server: {
     host: 'localhost',//配置主机名
     port: 8080,//配置端口号
-    proxy: {
+    proxy: {//代理
       "/api": {
         target: "http://localhost:3000"
       }

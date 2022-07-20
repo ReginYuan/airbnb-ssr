@@ -28,9 +28,9 @@ export default {
     neighbors: 'Neighbors',
   },
   login: {
-    loginBtn: 'Log in Airbnb',
-    signBtn: 'Sign up',
-    loginTab: 'Log in',
+    loginBtn: 'Login Airbnb',
+    signBtn: 'Signup',
+    loginTab: 'Login',
     signTab: 'Sign up',
     placeMobile: 'Please write correct mobile number',
     placePass: 'Please white corret password',

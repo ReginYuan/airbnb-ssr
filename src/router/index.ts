@@ -9,23 +9,32 @@ const routes = [
     },
     component: () => import('../views/home/home.vue')
   },
-{
-  path: '/welcome',
+  {
+    path: '/welcome',
     name: 'welcome',
-      meta: {
-    title: '欢迎页',
+    meta: {
+      title: '欢迎页',
       keepAlive: false,
     },
-  component: () => import('../views/welcome/welcome.vue'),
+    component: () => import('../views/welcome/welcome.vue'),
   },
-{
-  path: '/login',
+  {
+    path: '/login',
     name: 'login',
-      meta: {
-    title: '登录页',
+    meta: {
+      title: '登录页',
       keepAlive: false,
     },
-  component: () => import('../views/login/login.vue'),
+    component: () => import('../views/login/login.vue'),
+  },
+  {
+    path: '/detail/:id',
+    name: 'detail',
+    meta: {
+      title: '房屋详情页',
+      keepAlive: false,
+    },
+    component: () => import('../views/detail/detail.vue'),
   }
 ]
 

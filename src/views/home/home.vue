@@ -3,7 +3,7 @@ import houseOperates from "@/hooks/houseOperates";
 import { useStore } from "@/store/index";
 import { defineComponent } from "@vue/runtime-core";
 import { useRoute } from "vue-router";
-import HomeList from "@/views/home/commponents/homeList.vue";
+import HomeList from "@/views/home/components/homeList.vue";
 export default defineComponent({
   components: {
     HomeList,

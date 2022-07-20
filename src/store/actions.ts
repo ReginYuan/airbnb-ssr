@@ -2,7 +2,7 @@
  * actions 业务层数据操作
  *
  */
-import { fetchRoomList } from "@/api/home/index";
+import { fetchRoomDetail, fetchRoomList } from "@/api/home/index";
 
 export default {
   // 操作民宿的数据信息
@@ -16,8 +16,22 @@ export default {
     }
     return new Promise((resolve) => {
       fetchRoomList(params).then(res => {
-        console.log('数据结构', res)
         commit('saveHouseList', { ...res.data, payload })
+        resolve(true)
+      })
+    })
+  },
+  // 操作民宿详情的数据信息
+  saveHouseDetail({ commit }: any, payload: any) {
+    console.log('payload', payload);
+    let { id } = payload
+    let params = {
+      id
+    }
+    return new Promise((resolve) => {
+      fetchRoomDetail(params).then(res => {
+        console.log('数据结构', res)
+        commit('saveHouseDetail', { ...res.data[0] })
         resolve(true)
       })
     })

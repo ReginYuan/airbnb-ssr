@@ -27,5 +27,18 @@ export default {
     state.pageNum = pageNum
     state.cityCode = cityCode
     storage.setItem('roomList', data)
+  },
+  // 保存房屋详情信息
+  saveHouseDetail(state: any, data: any) {
+    const { detail, title, price } = data
+    state.roomDetail = { ...detail, title, price }
+    console.log('state.roomDetail', state.roomDetail);
+    storage.setItem('roomDetail', data)
+  },
+  // 保存房屋id
+  saveRoomId(state: any, payload: any) {
+    state.roomId = payload.id
+    console.log('payload.id', payload.id)
   }
+
 }

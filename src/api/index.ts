@@ -11,7 +11,7 @@ export default {
    */
   login(params: any) {
     return request({
-      url: '/users/login',
+      url: '/api/users/login',
       method: 'post',
       data: params,
       mock: false
@@ -24,7 +24,7 @@ export default {
    */
   sign(params: any) {
     return request({
-      url: '/users/sign',
+      url: '/api/users/sign',
       method: 'post',
       data: params,
       mock: false
@@ -37,7 +37,7 @@ export default {
    */
   logout(params: any) {
     return request({
-      url: '/users/logout',
+      url: '/api/users/logout',
       method: 'post',
       data: params,
       mock: false
@@ -50,7 +50,7 @@ export default {
    */
   house() {
     return request({
-      url: '/house/all',
+      url: '/api/house/all',
       method: 'get',
       data: {},
       mock: false

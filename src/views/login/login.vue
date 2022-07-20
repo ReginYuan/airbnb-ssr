@@ -12,7 +12,7 @@ const { userSign, userLogin } = userFormOperates(router, form);
 // 登录注册切换
 const handleText = (e: any) => {
   const { name } = e.props;
-  loginText.value = t(`login['${name}'Btn`);
+  loginText.value = t(`login['${name}Btn']`);
 };
 
 // 提交数据

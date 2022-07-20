@@ -8,7 +8,9 @@ export interface AllStateTypes {
   pageNum: number,
   pageSize: number,
   total: number,
-  cityCode: string
+  cityCode: string,
+  roomDetail: any,
+  roomId: null
 }
 
 // 接口返回类型
@@ -30,6 +32,12 @@ export interface IRoomParams extends AxiosRequestConfig {
   pageSize: number;
   cityCode: string;
 }
+
+// 民宿详情接口传值类型 并继承axios中的AxiosRequestConfig
+export interface IRoomDetailParams extends AxiosRequestConfig {
+  id: number
+}
+
 
 // 登录注册表单类型
 export interface IRuleForm {
