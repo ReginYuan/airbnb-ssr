@@ -10,7 +10,8 @@ export interface AllStateTypes {
   total: number,
   cityCode: string,
   roomDetail: any,
-  roomId: null
+  roomId: null,
+  orderStatus: boolean
 }
 
 // 接口返回类型

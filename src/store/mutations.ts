@@ -39,6 +39,9 @@ export default {
   saveRoomId(state: any, payload: any) {
     state.roomId = payload.id
     console.log('payload.id', payload.id)
+  },
+  // 保存订单状态
+  saveOrderStatus(state: any, payload: any) {
+    state.orderStatus = payload
   }
-
 }

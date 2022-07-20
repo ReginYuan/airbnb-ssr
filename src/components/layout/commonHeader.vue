@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { ref, defineEmits, getCurrentInstance } from "vue";
+import {
+  ref,
+  defineEmits,
+  getCurrentInstance,
+  defineAsyncComponent,
+} from "vue";
 import zhCn from "element-plus/lib/locale/lang/zh-cn";
 import en from "element-plus/lib/locale/lang/en";
 import userFormOperates from "@/hooks/userFormOperates";
@@ -26,6 +31,11 @@ const { userLogout } = userFormOperates(router);
 // $emit子组件向父组件传参
 const emit = defineEmits<{ (e: "changLang", language: any): void }>();
 
+// 异步组件加载
+const orderPopover = defineAsyncComponent(
+  () => import("@/views/order/components/orderPopover.vue")
+);
+
 // 切换语言
 const handleSelect = (e: any) => {
   if (e === "zh") {
@@ -38,6 +48,8 @@ const handleSelect = (e: any) => {
     router.push({ name: "login" });
   } else if (e === "logout") {
     userLogout();
+  } else if(e === "orders"){
+    store.commit("saveOrderStatus", true);
   }
 };
 
@@ -61,6 +73,7 @@ const getLanguage = () => {
   console.log("获取当前语言包成功");
 };
 getLanguage();
+
 </script>
 
 <template>
@@ -76,7 +89,19 @@ getLanguage();
       mode="horizontal"
       @select="handleSelect"
     >
-      <el-menu-item index="orders">{{ t("header.orders") }}</el-menu-item>
+      <el-menu-item index="orders">
+        {{ t("header.orders") }}
+        <template v-if="store.state.orderStatus">
+          <!-- 等待异步组件时渲染一些额外内容，让应用有更好的用户体验 -->
+          <Suspense>
+            <!-- 放置异步组件 -->
+            <template #default>
+              <orderPopover></orderPopover>
+            </template>
+            <template #fallback> load... </template>
+          </Suspense>
+        </template>
+      </el-menu-item>
       <el-menu-item index="records">{{ t("header.records") }}</el-menu-item>
       <el-sub-menu class="content-menu-sub" index="language">
         <template #title>{{ t("header.language") }}</template>

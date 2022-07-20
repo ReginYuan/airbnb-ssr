@@ -31,7 +31,8 @@ export function createSSRStore() {
       total: 0, //总条数
       cityCode: 'hz', //城市id
       roomDetail: storage.getItem('roomDetail') || {},
-      roomId: null
+      roomId: null,
+      orderStatus: false
     },
     actions,
     mutations,
