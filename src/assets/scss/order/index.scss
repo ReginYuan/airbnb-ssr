@@ -1,29 +1,29 @@
 .order {
+  position: absolute;
+  margin-top: 330px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 5px;
-  margin-top: 150px;
+  padding: 0px;
   z-index: 10;
-  height: 300px;
+  width: inherit;
+  height: 230px;
   background: #fff;
-  border-radius: 10px;
   overflow: hidden;
   overflow-y: scroll;
+  border-radius: 10px;
   &::-webkit-scrollbar {
     display: none;
   }
   &-item {
-    border-radius: 10px;
     margin: 5px 10px;
     padding: 5px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    border: 2px solid #eee;
+    border: 1px solid #eee;
+    border-radius: 10px;
     &-img {
-      // position: absolute;
       border-radius: 10px;
       width: 50px;
       height: 50px;

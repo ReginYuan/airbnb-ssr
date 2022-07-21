@@ -89,7 +89,7 @@ getLanguage();
       mode="horizontal"
       @select="handleSelect"
     >
-      <el-menu-item index="orders">
+      <el-menu-item class="content-menu-item" index="orders">
         {{ t("header.orders") }}
         <template v-if="store.state.orderStatus">
           <!-- 等待异步组件时渲染一些额外内容，让应用有更好的用户体验 -->
