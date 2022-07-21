@@ -33,7 +33,7 @@ export default {
    * @returns 
    */
   getStorage() {
-    // 获取localStorage存储空间,数据转换为 JavaScript 对象,如果没有就设置成对象{}
+    // 获取Storage存储空间,数据转换为 JavaScript 对象,如果没有就设置成对象{}
     return JSON.parse(Cookies.get(config.namespace) || "{}");
   },
   /**

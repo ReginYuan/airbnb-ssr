@@ -23,7 +23,7 @@ export function useStore() {
 export function createSSRStore() {
   return createStore<AllStateTypes>({
     state: {
-      userInfo: storage.getItem("userInfo") || {},// 存储用户信息
+      userInfo: storage.getItem('userInfo') || {},// 存储用户信息
       language: storage.getItem('language') || {}, //存储国际化语言
       roomList: storage.getItem('roomList') || [],//存储房间信息
       pageNum: 1, //页数

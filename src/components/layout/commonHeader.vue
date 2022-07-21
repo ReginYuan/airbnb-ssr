@@ -4,10 +4,12 @@ import {
   defineEmits,
   getCurrentInstance,
   defineAsyncComponent,
+  computed,
 } from "vue";
 import zhCn from "element-plus/lib/locale/lang/zh-cn";
 import en from "element-plus/lib/locale/lang/en";
 import userFormOperates from "@/hooks/userFormOperates";
+import storage from "@/utils/storage";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { useStore } from "@/store/index";
@@ -24,7 +26,13 @@ const store = useStore();
 const activeIndex = ref("orders");
 
 // 获取登陆状态
-let status = store.state.userInfo && store.state.userInfo.status;
+let userInfo = computed(() => store.state.userInfo);
+const { status } = userInfo.value;
+console.log(userInfo.value);
+
+let state = computed(() => store.state);
+console.log("state", state.value);
+// let status = store.state.status;
 // 初始化 封装方法对象 结构退出登陆方法
 const { userLogout } = userFormOperates(router);
 
@@ -35,6 +43,9 @@ const emit = defineEmits<{ (e: "changLang", language: any): void }>();
 const orderPopover = defineAsyncComponent(
   () => import("@/views/order/components/orderPopover.vue")
 );
+
+// 控制弹窗显隐
+const orderStatus = ref(false);
 
 // 切换语言
 const handleSelect = (e: any) => {
@@ -48,8 +59,8 @@ const handleSelect = (e: any) => {
     router.push({ name: "login" });
   } else if (e === "logout") {
     userLogout();
-  } else if(e === "orders"){
-    store.commit("saveOrderStatus", true);
+  } else if (e === "orders") {
+    store.commit("saveOrderStatus");
   }
 };
 
@@ -73,7 +84,6 @@ const getLanguage = () => {
   console.log("获取当前语言包成功");
 };
 getLanguage();
-
 </script>
 
 <template>
@@ -98,7 +108,6 @@ getLanguage();
             <template #default>
               <orderPopover></orderPopover>
             </template>
-            <template #fallback> load... </template>
           </Suspense>
         </template>
       </el-menu-item>

@@ -34,7 +34,6 @@
       align-items: flex-start;
       justify-content: center;
       margin-left: 5px;
-      &-title,
       &-price {
         height: 20px;
         display: flex;
@@ -43,8 +42,13 @@
         justify-content: center;
       }
       &-title {
+        display: inline-block;
+        height: 20px;
+        line-height: 20px;
         font-size: 16px;
         color: #000000;
+        width: 100px;
+        @include line-text-overflow;
       }
       &-price {
         font-size: 10px;
@@ -52,4 +56,14 @@
       }
     }
   }
+}
+
+.mask{
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: transparent;
+  z-index: 10;
 }

@@ -44,13 +44,26 @@ export default {
     })
   },
   /**
-   * 获取所有民宿信息
+   * 新增民宿订单信息
    * @param params
    * @returns 
    */
-  house() {
+  saveOrder(params: any) {
     return request({
-      url: '/api/house/all',
+      url: '/api/order/add',
+      method: 'post',
+      data: params,
+      mock: false
+    })
+  },
+  /**
+ * 获取民宿订单信息
+ * @param params
+ * @returns 
+ */
+  getOrderList() {
+    return request({
+      url: '/api/order/list',
       method: 'get',
       data: {},
       mock: false

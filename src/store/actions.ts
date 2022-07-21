@@ -3,11 +3,9 @@
  *
  */
 import { fetchRoomDetail, fetchRoomList } from "@/api/home/index";
-
 export default {
   // 操作民宿的数据信息
   saveHouseList({ commit }: any, payload: any) {
-    console.log('payload', payload);
     let { pageNum, cityCode } = payload
     let params = {
       pageNum,
@@ -23,17 +21,15 @@ export default {
   },
   // 操作民宿详情的数据信息
   saveHouseDetail({ commit }: any, payload: any) {
-    console.log('payload', payload);
     let { id } = payload
     let params = {
       id
     }
     return new Promise((resolve) => {
       fetchRoomDetail(params).then(res => {
-        console.log('数据结构', res)
         commit('saveHouseDetail', { ...res.data[0] })
         resolve(true)
       })
     })
-  }
+  },
 }

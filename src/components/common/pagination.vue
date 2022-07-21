@@ -25,7 +25,6 @@ const emit = defineEmits<{
 }>();
 function changePage(pageNum: number, cityCode: string) {
   let params = { pageNum, cityCode: store.state.cityCode };
-  console.log("子组件", params);
   emit("changePage", params);
 }
 </script>

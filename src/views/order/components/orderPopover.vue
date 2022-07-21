@@ -1,32 +1,42 @@
 <template>
+ <teleport to="#app">
+    <div class="mask" @click="closeMask"></div>
+ </teleport>
   <ul class="order">
-    <li class="order-item" v-for="i in 5" :key="i">
-      <img
-        class="order-item-img"
-        src="https://z1.muscache.cn/im/pictures/da836e42-cf1c-4dce-a6b6-b6780df104dc.jpg?aki_policy=xx_large"
-        alt=""
-      />
+    <li class="order-item" v-for="(item, index) in orderData" :key="index">
+      <img class="order-item-img" :src="item.pictureUrl" alt="" />
       <div class="order-item-info">
-        <p class="order-item-info-title">北京四合院</p>
-        <p class="order-item-info-price">￥234/晚 * 1个人</p>
+        <p class="order-item-info-title">{{ item.title }}</p>
+        <p class="order-item-info-price">
+          ￥{{ item.price }}/晚 * {{ item.personNumber }}个人
+        </p>
       </div>
     </li>
   </ul>
 </template>
 
 <script setup lang="ts">
+import { reactive, getCurrentInstance } from "vue";
+import { useStore } from '@/store/index';
+let orderData = reactive<Array<any>>([]);
+const { proxy }: any = getCurrentInstance();
+const store = useStore()
+// 异步获取订单信息对应异步组件
+const getOrderList = async () => {
+  return proxy.$api.getOrderList().then((res) => {
+    if (res) {
+      orderData = res.data;
+    }
+  });
+};
+await getOrderList();
 
-function fetchApi() {
-  return new Promise((resolve)=>{
-    setTimeout(() => {
-      console.log('111')
-    }, 5000);
-    resolve(true)
-  })
-}
-await fetchApi()
+// 全屏触发关闭 订单弹窗
+const closeMask = () => {
+  store.commit('saveOrderStatus')
+};
 </script>
 
 <style lang="scss" scoped>
-@import'@/assets/scss/order/index.scss'
+@import "@/assets/scss/order/index.scss";
 </style>

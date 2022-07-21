@@ -25,7 +25,7 @@ export function createApp() {
   // 创建i18n语言包实例
   const i18n = createSSRI18n()
 
-  // 通过store和router数据
+  // 同步store和router数据
   sync(store, router)
 
   //语言国家化

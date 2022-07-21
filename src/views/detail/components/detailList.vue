@@ -76,7 +76,7 @@
           <span>￥{{ roomDetail.price }}</span
           >/晚
         </p>
-        <el-form ref="orderForm" :model="orderForm">
+        <el-form ref="ruleForm" :model="orderForm">
           <el-form-item prop="personNumber" class="room-detail-form-itemNumber">
             <span>人数</span>
             <select v-model="orderForm.personNumber">
@@ -95,13 +95,35 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive } from "vue";
+import { computed, reactive, ref, getCurrentInstance } from "vue";
 import { useStore } from "@/store/index";
+import { useRoute } from "vue-router";
+import { ElMessage } from "element-plus";
+const ruleForm = ref();
 const orderForm = reactive({ personNumber: 1 });
 const store = useStore();
+const route = useRoute();
 const roomDetail = computed(() => store.state.roomDetail);
-console.log("store.state.roomDetail", store.state.roomDetail);
-const submitForm = () => {};
+const { proxy }: any = getCurrentInstance();
+// 预定民宿功能
+const saveOrder = async () => {
+  const { id: orderId } = route.params;
+  const { personNumber } = orderForm;
+  const { title, price, pictureUrl } = roomDetail.value;
+  const params = { orderId, personNumber, title, price, pictureUrl };
+  const res = await proxy.$api.saveOrder(params);
+  if (res) {
+    ElMessage.success(res.msg)
+  }else{
+    ElMessage.error(res.msg)
+  }
+};
+const submitForm = () => {
+  // if (store.state.userInfo.) {
+    
+  // }
+  saveOrder();
+};
 </script>
 
 <style lang='scss'>
